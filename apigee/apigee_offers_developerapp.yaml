@@ -1,0 +1,19 @@
+apiVersion: apigee.google.com/v1
+kind: DeveloperApp
+metadata:
+  name: offersapp
+  env : default-dev
+  config: apigee-config-apigeex
+  config-namespace: apigee-config
+  developer_email: gsjurseth+demo@google.com
+spec:
+  # Add fields here
+  name: offersapp
+  scopes: []
+  attributes:
+  - name: ADMIN_EMAIL
+    value: admin@example.com
+  - name: DisplayName
+    value: Retail API Offers App
+  apiProducts:
+  - OffersProduct

@@ -1,0 +1,14 @@
+apiVersion: apigee.google.com/v1
+kind: Developer
+metadata:
+  name: developer-sample
+  env : default-dev
+  config: apigee-config-apigeex
+  config-namespace: apigee-config
+spec:
+  # Add fields here
+  email: gsjurseth+demo@google.com
+  firstName: GeirDemo
+  lastName: SjursethDemo
+  userName : gsjdemo
+  #attributes
