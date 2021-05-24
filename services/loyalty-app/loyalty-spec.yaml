@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  description: "This is a sample server Loyalty Service.  You can find out more
+    about     Swagger at [http://swagger.io](http://swagger.io) or on
+    [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample,
+    you can use the api key `special-key` to test the
+    authorization     filters."
+  version: 1.0.0
+  title: Swagger Loyalty Service
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: rajeshmi@google.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: loan
+    description: Everything about your Loyalty Members
+paths:
+  /members:
+    get:
+      tags:
+        - members
+      summary: Get All Members
+      description: ""
+      operationId: getMembers
+      responses:
+        "200":
+          description: OK (successfully authenticated)
+        "405":
+          description: Invalid input
+      security:
+        - api_key: []
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://loyalty.default.svc.cluster.local/v2
+components:
+  securitySchemes:
+    loyalty_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://petstore.swagger.io/oauth/dialog
+          scopes:
+            write:offers: "modify member"
+            read:offers: read member
+    api_key:
+      type: apiKey
+      name: api_key
+      in: query
