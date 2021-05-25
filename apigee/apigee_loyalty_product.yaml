@@ -1,0 +1,29 @@
+apiVersion: apigee.google.com/v1
+kind: ApiProduct
+metadata:
+  name: loyalty-product
+  env : default-dev
+  config: apigee-config-apigeex
+  config-namespace: apigee-config
+spec:
+  # Add fields here
+  apiResources:
+  -  "/"
+  -  "/*"
+  name: loyalty-product
+  approvalType: auto
+  description: Loyalty Product
+  displayName: Loyalty Product
+  attributes:
+  - name: access
+    value: public
+  - name: apigee-remote-service-targets
+    value: loyalty.default.svc.cluster.local
+  environments:
+  - test
+  proxies:
+  - remote-service
+ # scopes: 
+ # quota : 1
+ # quotaInterval : 1
+ # quotaTimeUnit : minute

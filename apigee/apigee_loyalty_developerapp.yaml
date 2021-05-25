@@ -1,0 +1,27 @@
+apiVersion: apigee.google.com/v1
+kind: DeveloperApp
+metadata:
+  name: loyalty-app
+  env : default-dev
+  config: apigee-config-apigeex
+  config-namespace: apigee-config
+  developer_email: rajeshmi@google.com
+spec:
+  # Add fields here
+  name: loyalty-app
+  scopes: []
+  status: approved
+  attributes:
+  - name: ADMIN_EMAIL
+    value: admin@example.com
+  - name: DisplayName
+    value: Loyalty App
+  credentials:
+  - apiProducts:
+    - apiproduct : loyalty-product
+      status : approved
+    expiresAt: -1
+    attributes: []
+    scopes: []
+    status: approved
+
