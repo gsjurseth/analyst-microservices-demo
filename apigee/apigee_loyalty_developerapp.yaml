@@ -10,18 +10,11 @@ spec:
   # Add fields here
   name: loyalty-app
   scopes: []
-  status: approved
   attributes:
   - name: ADMIN_EMAIL
     value: admin@example.com
   - name: DisplayName
     value: Loyalty App
-  credentials:
-  - apiProducts:
-    - apiproduct : loyalty-product
-      status : approved
-    expiresAt: -1
-    attributes: []
-    scopes: []
-    status: approved
+  apiProducts:
+  - loyalty-product
 

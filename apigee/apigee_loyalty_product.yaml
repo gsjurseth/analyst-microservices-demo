@@ -20,7 +20,7 @@ spec:
   - name: apigee-remote-service-targets
     value: loyalty.default.svc.cluster.local
   environments:
-  - test
+  - default-dev
   proxies:
   - remote-service
  # scopes: 
