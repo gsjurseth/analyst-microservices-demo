@@ -5,7 +5,7 @@ info:
     [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample,
     you can use the api key `special-key` to test the
     authorization     filters."
-  version: 1.0.0
+  version: 1.0.1
   title: Retail API Loyalty Service
   termsOfService: http://swagger.io/terms/
   contact:
@@ -14,7 +14,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 tags:
-  - name: loan
+  - name: loyalty
     description: Everything about your Loyalty Members
 paths:
   /members:
@@ -29,6 +29,8 @@ paths:
           description: OK (successfully authenticated)
         "405":
           description: Invalid input
+        "403":
+          description: Forbidden
       security:
         - api_key: []
 externalDocs:
@@ -41,4 +43,4 @@ components:
     api_key:
       type: apiKey
       name: x-api-key
-      in: header
+      in: query

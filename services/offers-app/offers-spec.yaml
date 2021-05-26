@@ -5,8 +5,8 @@ info:
     [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample,
     you can use the api key `special-key` to test the
     authorization     filters."
-  version: 1.0.0
-  title: Swagger offers Service
+  version: 1.0.1
+  title: Retail API offers Service
   termsOfService: http://swagger.io/terms/
   contact:
     email: rajeshmi@google.com
@@ -14,23 +14,25 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 tags:
-  - name: loan
-    description: Everything about your offers Members
+  - name: Offers
+    description: All offers 
 paths:
-  /members:
+  /offers:
     get:
       tags:
-        - members
-      summary: Get All Members
+        - offers
+      summary: Get All Offers
       description: ""
-      operationId: getMembers
+      operationId: getOffers
       responses:
         "200":
           description: OK (successfully authenticated)
         "405":
           description: Invalid input
+        "403":
+          description: Forbidden
       security:
-        - x-api-key: []
+        - api_key: []
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
@@ -38,15 +40,7 @@ servers:
   - url: https://api.offers.dynolab.app/
 components:
   securitySchemes:
-    offers_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: http://petstore.swagger.io/oauth/dialog
-          scopes:
-            write:offers: "modify member"
-            read:offers: read member
     api_key:
       type: apiKey
       name: x-api-key
-      in: header
+      in: query

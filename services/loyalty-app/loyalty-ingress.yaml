@@ -19,7 +19,7 @@ spec:
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: layalty
+  name: loyalty
 spec:
   hosts:
   - "api.loyalty.dynolab.app"
@@ -31,6 +31,15 @@ spec:
         exact: /members
     route:
     - destination:
-        host: loyalty
+        host: loyalty.default.svc.cluster.local
         port:
           number: 80
+    corsPolicy:
+      allowOrigins:
+      - exact: '*'
+      allowMethods:
+      - GET
+      allowCredentials: false
+      allowHeaders:
+      - x-api-key
+      maxAge: "24h"

@@ -34,3 +34,12 @@ spec:
         host: offers
         port:
           number: 80
+    corsPolicy:
+      allowOrigins:
+      - exact: '*'
+      allowMethods:
+      - GET
+      allowCredentials: false
+      allowHeaders:
+      - x-api-key
+      maxAge: "24h"
