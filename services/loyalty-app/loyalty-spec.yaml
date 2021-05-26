@@ -30,12 +30,12 @@ paths:
         "405":
           description: Invalid input
       security:
-        - api_key: []
+        - x-api-key: []
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: http://loyalty.default.svc.cluster.local/v2
+  - url: http://api.loyalty.dynolab.app/
 components:
   securitySchemes:
     loyalty_auth:
@@ -48,5 +48,5 @@ components:
             read:offers: read member
     api_key:
       type: apiKey
-      name: api_key
-      in: query
+      name: x-api-key
+      in: header
