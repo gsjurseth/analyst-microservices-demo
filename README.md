@@ -21,18 +21,21 @@ kubectl label namespace default istio-injection=enabled
 ```
 #####Demo Starts Here #################
 
+## Reset the envoy filter if already set 
+kubectl delete -f samples/envoyfilter-sidecar.yaml
 
-# Add the loyalty services
+
+## Add the loyalty services
 ```
 kubectl apply -f services/loyalty-app/loyalty.yaml
 kubectl apply -f services/loyalty-app/loyalty-ingress.yaml
 ```
-# Add the offers services
+## Add the offers services
 ```
 kubectl apply -f services/offers-app/offers.yaml
 kubectl apply -f services/offers-app/offers-ingress.yaml
 ```
-#Test the Service
+## Test the Service
 - Use curl Another shell
 ```
 curl http://api.loyalty.dynolab.app/members
