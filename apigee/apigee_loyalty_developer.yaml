@@ -2,7 +2,7 @@ apiVersion: apigee.google.com/v1
 kind: Developer
 metadata:
   name: developer-sample
-  env : default-dev
+  env : prod
   config: apigee-config-apigeex
   config-namespace: apigee-config
 spec:

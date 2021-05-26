@@ -35,19 +35,22 @@ kubectl apply -f services/offers-app/offers-ingress.yaml
 #Test the Service
 - Use curl Another shell
 ```
-kubectl run -it curl --image=curlimages/curl --restart=Never -- sh
-
-curl -i loyalty.default.svc.cluster.local/members
-curl -i offers.default.svc.cluster.local/offers
+curl -i http://api.dynolab.app/members
+curl -i http://api.dynolab.app/offers
 ```
 
-#Add Envoy filter
+## Envoy Adapter
+kubectl apply -f samples/apigee-envoy-adapter.yaml
+kubectl get pods -n apigee
+
+
+## Add Envoy filter
 ```
 kubectl apply -f samples/envoyfilter-sidecar.yaml
 ```
 # Try curl command again
 ```
-curl -i loyalty.default.svc.cluster.local/members  
+curl -i http://api.dynolab.app/members  
 should return 403
 ```
 ## Add Product Mapping
@@ -58,7 +61,7 @@ kubectl apply -f apigee/apigee_loyalty_developerapp.yaml
 kubectl get developerapps
 
 APIKEY=<key printed>
-curl -i loyalty.default.svc.cluster.local/members  -H 'x-api-key: $APIKEY'
+curl -i http://api.dyolab.app/members  -H 'x-api-key: $APIKEY'
 ```
 
 

@@ -1,29 +1,28 @@
 apiVersion: apigee.google.com/v1
 kind: ApiProduct
 metadata:
-  name: loyalty-product
-  env : default-dev
+  name: retail-api-loyalty-product
+  env : prod
   config: apigee-config-apigeex
   config-namespace: apigee-config
 spec:
   # Add fields here
   apiResources:
   -  "/"
-  -  "/*"
-  name: loyalty-product
+  name: retail-api-loyalty-product
   approvalType: auto
-  description: Loyalty Product
-  displayName: Loyalty Product
+  description: Retail API Loyalty Product
+  displayName: Retail API Loyalty Product
   attributes:
   - name: access
     value: public
   - name: apigee-remote-service-targets
-    value: loyalty.default.svc.cluster.local
+    value: api.dynolab.app
   environments:
-  - default-dev
+  - prod
   proxies:
   - remote-service
  # scopes: 
- # quota : 1
- # quotaInterval : 1
- # quotaTimeUnit : minute
+  #quota : "10"
+  #quotaInterval : "1"
+  #quotaTimeUnit : minute

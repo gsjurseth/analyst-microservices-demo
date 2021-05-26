@@ -27,8 +27,8 @@ spec:
     matchLabels:
       managed-by: apigee
   jwtRules:
-  - issuer: https://34.117.7.140.nip.io/remote-token/token
-    jwksUri: https://34.117.7.140.nip.io/remote-token/certs
+  - issuer: https://api.dynolab.io/remote-token/token
+    jwksUri: https://api.dynolab.io/remote-token/certs
 # ---
 # apiVersion: security.istio.io/v1beta1
 # kind: AuthorizationPolicy

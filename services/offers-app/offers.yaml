@@ -47,7 +47,7 @@ spec:
         managed-by: apigee
     spec:
       containers:
-      - image: gcr.io/bap-amer-select-demo2/offers:1.0.0
+      - image: gcr.io/dynolab-153020/offers:1.0.0
         imagePullPolicy: IfNotPresent
         name: offers
         ports:

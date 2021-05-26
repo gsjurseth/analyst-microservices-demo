@@ -13,8 +13,8 @@ metadata:
   namespace: apigee-config
 data:
   mgmt_api: https://apigee.googleapis.com/v1
-  service_account_secret : bap-amer-select-demo2-org-admin
-  org_name: bap-amer-select-demo2
-  env_name: default-dev
+  service_account_secret : dynolab-153020-apigee-org-admin
+  org_name: dynolab-153020
+  env_name: prod
   profile: apigeex
   auth: token

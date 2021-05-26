@@ -34,8 +34,8 @@ spec:
       labels:
         app: apigee-remote-service-envoy
         version: v1
-        org: bap-amer-select-demo2
-        env: default-dev
+        org: dynolab-153020
+        env: prod
     spec:
       serviceAccountName: apigee-remote-service-envoy
       securityContext:  
@@ -87,11 +87,11 @@ spec:
       - name: analytics-secret
         secret:
           defaultMode: 420
-          secretName: bap-amer-select-demo2-default-dev-analytics-secret
+          secretName: dynolab-153020-prod-analytics-secret
       - name: policy-secret
         secret:
           defaultMode: 420
-          secretName: bap-amer-select-demo2-default-dev-policy-secret
+          secretName: dynolab-153020-prod-policy-secret
 ---
 apiVersion: v1
 kind: Service
@@ -100,8 +100,8 @@ metadata:
   namespace: apigee
   labels:
     app: apigee-remote-service-envoy
-    org: bap-amer-select-demo2
-    env: default-dev
+    org: dynolab-153020
+    env: prod
 spec:
   ports:
   - port: 5000
