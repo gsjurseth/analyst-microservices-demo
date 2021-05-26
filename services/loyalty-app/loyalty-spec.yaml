@@ -35,7 +35,7 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 servers:
-  - url: http://api.loyalty.dynolab.app/
+  - url: https://api.loyalty.dynolab.app/
 components:
   securitySchemes:
     api_key:
