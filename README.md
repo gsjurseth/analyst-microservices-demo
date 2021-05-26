@@ -2,6 +2,7 @@
 #Setup
 -----------
 
+- Env Setup
 ```
 export ORG=bap-amer-select-demo2
 export RUNTIME=https://34.117.7.140.nip.io
@@ -11,31 +12,31 @@ export AX_SERVICE_ACCOUNT=/Users/rajeshmi/presales/git/apigee-envoy-adapter/gatr
 ./apigee-remote-service-cli provision --organization $ORG --environment $ENV      --runtime $RUNTIME --namespace $NAMESPACE --analytics-sa $AX_SERVICE_ACCOUNT --token $TOKEN > config.yaml
 ```
 
-#Disable Injection
+- Disable Injection
 ```
 kubectl label namespace default istio-injection-
 ```
-#Enable Injection
+- Enable Injection
 ```
 kubectl label namespace default istio-injection=enabled
 ```
 
-## Add the loyalty services
+- Add the loyalty services
 ```
 kubectl apply -f services/loyalty-app/loyalty.yaml
 kubectl apply -f services/loyalty-app/loyalty-ingress.yaml
 ```
-## Add the offers services
+- Add the offers services
 ```
 kubectl apply -f services/offers-app/offers.yaml
 kubectl apply -f services/offers-app/offers-ingress.yaml
 ```
 
-## Envoy Adapter
+- Envoy Adapter
 kubectl apply -f samples/apigee-envoy-adapter.yaml
 kubectl get pods -n apigee
 
-## Add Product Mapping
+- Add Product Mapping
 ```
 kubectl apply -f apigee/apigee_loyalty_product.yaml
 kubectl apply -f apigee/apigee_loyalty_developer.yaml
@@ -45,14 +46,10 @@ NAME                     APPNAME                  CONSUMERKEY                   
 retail-api-loyalty-app   retail-api-loyalty-app   xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2   27m
 
 ```
-
-
-
-#####Pre Demo Script #################
-## Reset the envoy filter if already set 
+##### Pre Demo Script #################
 kubectl delete -f samples/envoyfilter-sidecar.yaml
 
-#####Demo Starts Here #################
+##### Demo Starts Here #################
 
 There are two microservices - loyalty service and offers service. Loyalty services returns all the members and offers service provides all the differnt offers.
 
