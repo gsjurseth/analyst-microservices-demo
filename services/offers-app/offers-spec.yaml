@@ -31,6 +31,8 @@ paths:
           description: Invalid input
         "403":
           description: Forbidden
+        "429":
+          description: Quota Exceeded
       security:
         - api_key: []
 externalDocs:

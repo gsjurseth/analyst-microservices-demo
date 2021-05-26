@@ -31,7 +31,7 @@ spec:
         exact: /members
     route:
     - destination:
-        host: loyalty.default.svc.cluster.local
+        host: loyalty
         port:
           number: 80
     corsPolicy:
