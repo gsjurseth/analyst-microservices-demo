@@ -35,8 +35,8 @@ kubectl apply -f services/offers-app/offers-ingress.yaml
 #Test the Service
 - Use curl Another shell
 ```
-curl -i http://api.dynolab.app/members
-curl -i http://api.dynolab.app/offers
+curl http://api.loyalty.dynolab.app/members
+curl http://api.offers.dynolab.app/offers
 ```
 
 ## Envoy Adapter
@@ -50,7 +50,7 @@ kubectl apply -f samples/envoyfilter-sidecar.yaml
 ```
 # Try curl command again
 ```
-curl -i http://api.dynolab.app/members  
+curl -i http://api.loyalty.dynolab.app/members  
 should return 403
 ```
 ## Add Product Mapping
@@ -59,9 +59,11 @@ kubectl apply -f apigee/apigee_loyalty_product.yaml
 kubectl apply -f apigee/apigee_loyalty_developer.yaml
 kubectl apply -f apigee/apigee_loyalty_developerapp.yaml
 kubectl get developerapps
+NAME                     APPNAME                  CONSUMERKEY                                        AGE
+retail-api-loyalty-app   retail-api-loyalty-app   xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2   27m
 
-APIKEY=<key printed>
-curl -i http://api.dyolab.app/members  -H 'x-api-key: $APIKEY'
+curl http://api.loyalty.dynolab.app/members -v -H 'x-api-key:xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2'
+curl http://api.offers.dynolab.app/offers -v -H 'x-api-key:xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2'
 ```
 
 
