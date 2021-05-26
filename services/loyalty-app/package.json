@@ -1,5 +1,5 @@
 {
-  "name": "loans-v1",
+  "name": "loyalty-v1",
   "version": "1.0.0",
   "description": "Sample Microservices for loans-v1 ",
   "author": "rajeshmi",
@@ -11,6 +11,7 @@
     }
   ],
   "devDependencies": {
+    "cors": "2.8.5",
     "express": "^4.17.1"
   }
 }

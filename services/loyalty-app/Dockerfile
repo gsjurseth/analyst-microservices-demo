@@ -13,7 +13,7 @@ RUN npm install
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY . .
+COPY app.js ./app.js
 
 EXPOSE 8080
 CMD [ "node", "app.js" ]
