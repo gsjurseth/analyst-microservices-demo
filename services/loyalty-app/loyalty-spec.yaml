@@ -30,7 +30,7 @@ paths:
         "405":
           description: Invalid input
       security:
-        - x-api-key: []
+        - api_key: []
 externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
