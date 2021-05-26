@@ -19,11 +19,6 @@ kubectl label namespace default istio-injection-
 ```
 kubectl label namespace default istio-injection=enabled
 ```
-#####Demo Starts Here #################
-
-## Reset the envoy filter if already set 
-kubectl delete -f samples/envoyfilter-sidecar.yaml
-
 
 ## Add the loyalty services
 ```
@@ -35,27 +30,11 @@ kubectl apply -f services/loyalty-app/loyalty-ingress.yaml
 kubectl apply -f services/offers-app/offers.yaml
 kubectl apply -f services/offers-app/offers-ingress.yaml
 ```
-## Test the Service
-- Use curl Another shell
-```
-curl https://api.loyalty.dynolab.app/members
-curl https://api.offers.dynolab.app/offers
-```
 
 ## Envoy Adapter
 kubectl apply -f samples/apigee-envoy-adapter.yaml
 kubectl get pods -n apigee
 
-
-## Add Envoy filter
-```
-kubectl apply -f samples/envoyfilter-sidecar.yaml
-```
-# Try curl command again
-```
-curl -i https://api.loyalty.dynolab.app/members  
-should return 403
-```
 ## Add Product Mapping
 ```
 kubectl apply -f apigee/apigee_loyalty_product.yaml
@@ -65,8 +44,82 @@ kubectl get developerapps
 NAME                     APPNAME                  CONSUMERKEY                                        AGE
 retail-api-loyalty-app   retail-api-loyalty-app   xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2   27m
 
-curl https://api.loyalty.dynolab.app/members -v -H 'x-api-key:xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2'
-curl https://api.offers.dynolab.app/offers -v -H 'x-api-key:xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2'
 ```
 
+
+
+#####Pre Demo Script #################
+## Reset the envoy filter if already set 
+kubectl delete -f samples/envoyfilter-sidecar.yaml
+
+#####Demo Starts Here #################
+
+There are two microservices - loyalty service and offers service. Loyalty services returns all the members and offers service provides all the differnt offers.
+
+These services are built as containers and deployed in kubernetes clusters.
+```
+kubectl get svc
+kubectl get pods
+```
+
+These services are deployed in istio service meshes and a envoy sidecar is running. In order to access these services we have istio ingressgateway and defined Gateway and VirtualSevices to access.
+
+```
+kubectl get gateway
+```
+
+The details of these Gateway and Virtual Services can be be found at 
+```
+cat services/loyalty-app/loyalty-ingress.yaml
+cat services/offers-app/offers-ingress.yaml
+```
+
+These services can also be tested as 
+
+```
+curl https://api.loyalty.dynolab.app/members
+curl https://api.offers.dynolab.app/offers
+```
+
+These services can be accessed without any security. Apigee Envoy Adapter lets you secure this service by adding Envoy filter to the envoy sidecar proxy.  Lets apply the Adapter.
+```
+kubectl apply -f samples/envoyfilter-sidecar.yaml
+```
+
+Lets take a moment to review whats inside the filter
+```
+cat samples/envoyfilter-sidecar.yaml
+```
+
+HTTP Filter
+This enables Envoy’s Http External Auth filter for all inbound HTTP calls arriving at all services pod managed by apigee.  The Http External Auth filter calls out to an external service apigee-remote-service-envoy.apigee:5000.
+
+Network Filter
+It also enables the Envoy's Access Log filter for all network calls which is required for Analytics.
+
+Once this is applied try the curl command 
+
+```
+curl -i https://api.loyalty.dynolab.app/members  
+should return 403
+```
+
+```
+curl -i https://api.offers.dynolab.app/offers  
+should return 403
+```
+
+- Go to Apigee UI 
+     Talk about Api Product - Retail API Loyalty Product
+     Talk about App -   Retail API Loyalty App
+     Get the API Key - 
+
+- Go to Dev portal , use the API Key to access the APIs -
+    - Loyalty API and then Offers API.  Offers API will show 403
+
+-  Test Qouta 
+Go to CLI for repeated access - 
+
+Repeat 5 - 10 times :
+curl -i https://api.loyalty.dynolab.app/members?apikey=xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2
 
