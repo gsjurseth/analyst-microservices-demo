@@ -118,5 +118,5 @@ should return 403
 Go to CLI for repeated access - 
 
 Repeat 5 - 10 times :
-curl -i https://api.loyalty.dynolab.app/members?apikey=xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2
+curl -i https://api.loyalty.dynolab.app/members?x-api-key=xPrbt67D1ydoZdBGdToRkURd6su649CwPrbMfrBeuYocDPI2
 
