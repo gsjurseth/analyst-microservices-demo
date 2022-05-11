@@ -37,6 +37,10 @@ kubectl apply -f samples/apigee-envoy-adapter.yaml
 kubectl get pods -n apigee
 
 - Add Product Mapping
+
+These steps needs to be used if you have have also installed apigee-crd in your cluster. To know how to setup apigee-cd you camn refer here:
+https://github.com/rajeshm7910/apigee-crd
+
 ```
 kubectl apply -f apigee/apigee_loyalty_product.yaml
 kubectl apply -f apigee/apigee_loyalty_developer.yaml
