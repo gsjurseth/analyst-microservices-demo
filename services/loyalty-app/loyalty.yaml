@@ -44,7 +44,7 @@ spec:
       labels:
         app: loyalty
         version: v1
-        managed-by: apigee
+          #managed-by: apigee
     spec:
       containers:
       - image: gcr.io/dynolab-153020/loyalty:1.0.0

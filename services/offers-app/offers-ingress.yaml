@@ -1,30 +1,12 @@
 apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: offers-gateway
-spec:
-  selector:
-    istio: ingressgateway # use istio default controller
-  servers:
-  - port:
-      number: 443
-      name: https
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      credentialName: offers-credential
-    hosts:
-    - "api.offers.dynolab.app"
----
-apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: offers
 spec:
   hosts:
-  - "api.offers.dynolab.app"
+  - "apik8s.dynolab.io"
   gateways:
-  - offers-gateway
+  - apik8s-gateway
   http:
   - match:
     - uri:
@@ -34,11 +16,18 @@ spec:
         host: offers
         port:
           number: 80
+      headers:
+        request:
+          add:
+            x-target-name: "offers-service"
     corsPolicy:
       allowOrigins:
       - exact: '*'
       allowMethods:
       - GET
+      - POST
+      - PUT
+      - OPTIONS
       allowCredentials: false
       allowHeaders:
       - x-api-key

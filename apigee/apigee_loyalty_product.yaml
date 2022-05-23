@@ -1,14 +1,11 @@
 apiVersion: apigee.google.com/v1
-kind: ApiProduct
+kind: APIProduct
 metadata:
   name: retail-api-loyalty-product
-  env : prod
-  config: apigee-config-apigeex
-  config-namespace: apigee-config
 spec:
   # Add fields here
   apiResources:
-  -  "/"
+  -  "/snarf"
   name: retail-api-loyalty-product
   approvalType: auto
   description: Retail API Loyalty Product
@@ -19,7 +16,7 @@ spec:
   - name: apigee-remote-service-targets
     value: api.dynolab.app
   environments:
-  - prod
+  - default-dev
   proxies:
   - remote-service
  # scopes: 

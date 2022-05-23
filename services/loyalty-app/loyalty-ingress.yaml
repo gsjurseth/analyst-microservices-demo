@@ -1,30 +1,12 @@
 apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
-metadata:
-  name: loyalty-gateway
-spec:
-  selector:
-    istio: ingressgateway # use istio default controller
-  servers:
-  - port:
-      number: 443
-      name: https
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      credentialName: loyalty-credential
-    hosts:
-    - "api.loyalty.dynolab.app"
----
-apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: loyalty
 spec:
   hosts:
-  - "api.loyalty.dynolab.app"
+  - "apik8s.dynolab.io"
   gateways:
-  - loyalty-gateway
+  - apik8s-gateway
   http:
   - match:
     - uri:
@@ -34,12 +16,23 @@ spec:
         host: loyalty
         port:
           number: 80
+      headers:
+        request:
+          add:
+            x-target-name: "loyalty-service"
+        response:
+          add:
+            x-foo: "snarf"
     corsPolicy:
       allowOrigins:
       - exact: '*'
       allowMethods:
       - GET
+      - POST
+      - PUT
+      - OPTIONS
       allowCredentials: false
       allowHeaders:
       - x-api-key
+      - content-type
       maxAge: "24h"

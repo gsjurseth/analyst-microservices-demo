@@ -44,7 +44,7 @@ spec:
       labels:
         app: offers
         version: v1
-        managed-by: apigee
+          #managed-by: apigee
     spec:
       containers:
       - image: gcr.io/dynolab-153020/offers:1.0.0
