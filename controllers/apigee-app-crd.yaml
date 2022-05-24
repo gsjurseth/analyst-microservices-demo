@@ -18,10 +18,6 @@ spec:
         jsonPath: .spec.name
         description: App Name
         type: string
-      - name: ConsumerKey
-        jsonPath: .status.consumerKey
-        description: Consumer Key
-        type: string
       - name: Age
         jsonPath: .metadata.creationTimestamp
         type: date
@@ -108,11 +104,8 @@ spec:
                   items:
                     type: string
                   type: array
-                status:
-                  properties:
-                    conusmerKey:
-                      type: string
-                  type: object
+                conusmerKey:
+                  type: string
               type: object
             status:
               description: DeveloperAppStatus defines the observed state of DeveloperApp

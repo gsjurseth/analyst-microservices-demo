@@ -12,6 +12,18 @@ const MGMT_URL='https://apigee.googleapis.com/v1/organizations';
 const keyjson = fs.readFileSync('/sa/service_account');
 const json = JSON.parse(keyjson);
 
+const appcreds = {
+    "apiVersion": "v1",
+    "kind": "DeveloperAppCredential",
+    "metadata": {
+      "name": "replace",
+    },
+    "spec": {
+      "name": "None",
+      "consumerKey": "None",
+      "developer_email": "None"
+    }
+};
 
 async function getAccessToken() {
   const signingKey = await JWK.asKey(json.private_key, "pem");
@@ -74,35 +86,62 @@ async function deleteApp(app, token) {
     });
 }
 
+async function checkAppExists(app,token) {
+  const authHeader = `Bearer ${token}`;
+  let AppURL = `${MGMT_URL}/${app.org}/developers/${app.developer_email}/apps/${app.name}`;
+  let headers = {};
+  headers.Authorization = authHeader;
+  headers["Content-Type"] = "application/json";
+
+  let exists = false;
+  await axios
+    .get(AppURL,{ headers: headers })
+    .then( async r => {
+      console.log("App exists");
+      exists = true;
+    })
+    .catch( e => {
+      exists = false;
+    });
+  return exists;
+}
+
 // Create Apigee app, dev, and product
 async function createApp(app,token) {
   const authHeader = `Bearer ${token}`;
   let AppURL = `${MGMT_URL}/${app.org}/developers/${app.developer_email}/apps`;
 
-  delete app.org;
-  delete app.developer_email;
-
   let headers = {};
   headers.Authorization = authHeader;
   headers["Content-Type"] = "application/json";
 
-  let key = await axios
-    .post(AppURL, app, { headers: headers })
-    .then( async r => {
-      console.log("Created App");
-      let key = r.data.credentials[0].consumerKey;
-      await axios.post( `${AppURL}/${app.name}/keys/${key}`, { "apiProducts" : app.apiProducts }, { headers: headers } )
-        .then( r => {
-          console.log( "Created key and product association" );
+  let key = null;
+  console.log('about to check if app exists');
+
+  let exists = await checkAppExists(app,token);
+  if ( exists === false ) {
+    console.log('about to create app');
+    delete app.org;
+    delete app.developer_email;
+
+    key = await axios
+      .post(AppURL, app, { headers: headers })
+      .then( async r => {
+        console.log("Created App");
+        let key = r.data.credentials[0].consumerKey;
+        await axios.post( `${AppURL}/${app.name}/keys/${key}`, { "apiProducts" : app.apiProducts }, { headers: headers } )
+          .then( r => {
+            console.log( "Created key and product association: %j", r );
+          })
+          .catch( e => {
+            console.error("Error creating product association in app: %j", e);
+          });
+          return key;
         })
         .catch( e => {
-          console.error("Error creating product association in app: %j", e);
+          console.error("Error creating app: %j", e);
         });
-        return key;
-    })
-    .catch( e => {
-      console.error("Error creating app: %j", e);
-    });
+  }
   return key;
 }
 
@@ -180,12 +219,30 @@ app.post('/developerapp/sync', async function (req, res, next) {
 
   console.log('%j',obs.parent.spec);
 
+  console.log('the children');
+  console.log('%j',obs.children);
+
+  let children = [ obs.children ];
+
+  let app = obs.parent.spec;
+
   let key = await createApp(obs.parent.spec, token);
 
-  obs.parent.spec.status = { "consumerKey": key };
-  let desired = { status: { "consumerKey": key }, children: [], parent: obs.parent };
+  if ( key != null) {
+    let myAppCred = appcreds;
+    myAppCred.spec.name = app.name;
+    myAppCred.spec.developer_email = app.developer_email;
+    myAppCred.spec.consumerKey = key;
+    children = [ myAppCred ];
+    console.log('Key fetched: %s', key);
+    console.log('Children: %j', children);
+  }
+
+  let desired = { status: { "consumerKey": key }, children, parent: obs.parent };
+
   console.log('----- returning this ------');
   console.log("%j", desired);
+
   res.json(desired);
 });
 

@@ -7,6 +7,9 @@ spec:
   parentResource:
     apiVersion: apigee.google.com/v1
     resource: developerapps
+  childResources:
+  - apiVersion: apigee.google.com/v1
+    resource: developerappcredentials
   hooks:
     sync:
       webhook:
